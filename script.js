@@ -2,12 +2,20 @@ const projetsParFiliere = {
   melec: [
     {
       titre: "LECTURE SIGNAUX",
-      lien: "https://www.tinkercad.com/things/4BP9wfD0XwW-copy-of-lecture-signaux"
+      lien: "https://www.tinkercad.com/things/4BP9wfD0XwW-copy-of-lecture-signaux",
       // Pas de code pour Melec
+    },
+    {
+      titre: "REDRESSEUR DIODE",
+      lien: "https://www.tinkercad.com/things/9DSqqfoTbny-redresseur-diode"
+      // Pas de code pour ce projet non plus
     }
   ],
   ciel: [
-    {titre:"Feux tricolore", lien:"https://www.tinkercad.com/things/3xvFANLNDCH-amazing-hango-albar", code:`// Feux Tricolore Arduino
+    {
+      titre:"Feux tricolore",
+      lien:"https://www.tinkercad.com/things/3xvFANLNDCH-amazing-hango-albar",
+      code:`// Feux Tricolore Arduino
 int ledRouge = 10;
 int ledOrange = 9;
 int ledVerte = 8;
@@ -28,8 +36,12 @@ void loop() {
   digitalWrite(ledVerte, HIGH);
   delay(3000);
   digitalWrite(ledVerte, LOW);
-}`},
-    {titre:"Allumage LED", lien:"https://www.tinkercad.com/things/1UpGT1sjzcR-allumage-led", code:`const int led = 13;
+}`
+    },
+    {
+      titre:"Allumage LED",
+      lien:"https://www.tinkercad.com/things/1UpGT1sjzcR-allumage-led",
+      code:`const int led = 13;
 
 void setup() {
   pinMode(led, OUTPUT);
@@ -40,8 +52,12 @@ void loop() {
   delay(500);
   digitalWrite(led, LOW);
   delay(500);
-}`},
-    {titre:"Capteur Ultrason", lien:"https://www.tinkercad.com/things/elsRRyCBrV7-neat-crift-sango", code:`const int TRIGGER_PIN = 2;
+}`
+    },
+    {
+      titre:"Capteur Ultrason",
+      lien:"https://www.tinkercad.com/things/elsRRyCBrV7-neat-crift-sango",
+      code:`const int TRIGGER_PIN = 2;
 const int ECHO_PIN = 3;
 const float SOUND_SPEED = 0.343;
 const unsigned long MEASURE_TIMEOUT = 25000;
@@ -67,8 +83,12 @@ void loop() {
   Serial.print(distance_mm / 1000.0);
   Serial.println(" m)");
   delay(200);
-}`},
-    {titre:"Bouton + Buzzer", lien:"https://www.tinkercad.com/things/dkqLm6Srjgs-funky-curcan", code:`int bouton = 8;
+}`
+    },
+    {
+      titre:"Bouton + Buzzer",
+      lien:"https://www.tinkercad.com/things/dkqLm6Srjgs-funky-curcan",
+      code:`int bouton = 8;
 int buzzer = 7;
 
 void setup() {
@@ -82,10 +102,12 @@ void loop() {
   } else {
     noTone(buzzer);
   }
-}`}
+}`
+    }
   ]
 };
 
+// Fonction pour colorer le code
 function highlightCode(code){
   const comments = /(\/\/.*)/g;
   const keywords = /\b(void|int|float|const|long|pinMode|digitalWrite|delay|Serial|tone|noTone|INPUT|OUTPUT|HIGH|LOW)\b/g;
@@ -98,6 +120,7 @@ function highlightCode(code){
     .replace(numbers,'<span class="number">$&</span>');
 }
 
+// Fonction pour afficher les projets
 function renderProjects(filiere){
   const container = document.getElementById(filiere+"-list");
   container.innerHTML = "";
@@ -158,9 +181,11 @@ function renderProjects(filiere){
   container.appendChild(fragment);
 }
 
+// Initialisation
 renderProjects("melec");
 renderProjects("ciel");
 
+// Recherche
 document.getElementById("searchBox").addEventListener("input", e => {
   const term = e.target.value.toLowerCase();
   document.querySelectorAll(".project").forEach(p => {
@@ -169,6 +194,7 @@ document.getElementById("searchBox").addEventListener("input", e => {
   });
 });
 
+// Bouton remonter en haut
 const scrollBtn = document.getElementById("scrollTopBtn");
 window.onscroll = () => {
   scrollBtn.style.display = (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) ? "block" : "none";
@@ -176,5 +202,3 @@ window.onscroll = () => {
 scrollBtn.addEventListener("click", () => {
   window.scrollTo({top: 0, behavior: "smooth"});
 });
-
-
