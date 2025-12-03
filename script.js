@@ -1,8 +1,10 @@
 const projetsParFiliere = {
   melec: [
-    {titre:"Circuit simple Melec", lien:"https://www.tinkercad.com", code:`// Code exemple Melec
-void setup() {}
-void loop() {}`}
+    {
+      titre: "LECTURE SIGNAUX",
+      lien: "https://www.tinkercad.com/things/hqeFFlHGALv-lecture-signaux/editel?returnTo=%2Fdashboard%2Fdesigns%2Fcircuits&sharecode=TAdjYkHjqIRVWNDTclaUrcWTGF_LwzDM-f0_Vrn0X40"
+      // Pas de code pour Melec
+    }
   ],
   ciel: [
     {titre:"Feux tricolore", lien:"https://www.tinkercad.com/things/3xvFANLNDCH-amazing-hango-albar", code:`// Feux Tricolore Arduino
@@ -97,52 +99,59 @@ function highlightCode(code){
 }
 
 function renderProjects(filiere){
-  const container=document.getElementById(filiere+"-list");
-  container.innerHTML="";
+  const container = document.getElementById(filiere+"-list");
+  container.innerHTML = "";
   const fragment = document.createDocumentFragment();
 
-  projetsParFiliere[filiere].forEach(p=>{
-    const box=document.createElement("div"); box.className="project";
+  projetsParFiliere[filiere].forEach(p => {
+    const box = document.createElement("div");
+    box.className = "project";
 
-    const title=document.createElement("h3"); 
-    title.textContent=p.titre; 
+    const title = document.createElement("h3");
+    title.textContent = p.titre;
     title.classList.add("multicolor");
 
-    const link=document.createElement("a"); 
-    link.href=p.lien; 
-    link.target="_blank"; 
-    link.textContent="🔗 Ouvrir le montage";
+    const link = document.createElement("a");
+    link.href = p.lien;
+    link.target = "_blank";
+    link.textContent = "🔗 Ouvrir le montage";
 
-    const btn=document.createElement("button"); 
-    btn.textContent="Afficher le code";
+    box.append(title, link);
 
-    const copy=document.createElement("button"); 
-    copy.textContent="📋 Copier"; 
-    copy.style.display='none';
+    // Ajouter le code uniquement si il existe
+    if(p.code){
+      const btn = document.createElement("button");
+      btn.textContent = "Afficher le code";
 
-    const pre=document.createElement("pre"); 
-    pre.style.display="none"; 
-    pre.innerHTML=highlightCode(p.code);
+      const copy = document.createElement("button");
+      copy.textContent = "📋 Copier";
+      copy.style.display = "none";
 
-    btn.onclick=()=>{
-      const show=pre.style.display==="none";
-      pre.style.display=show?"block":"none";
-      copy.style.display=show?"inline-block":"none";
-      btn.textContent=show?"Masquer le code":"Afficher le code";
-    };
+      const pre = document.createElement("pre");
+      pre.style.display = "none";
+      pre.innerHTML = highlightCode(p.code);
 
-    copy.onclick=()=>{
-      navigator.clipboard.writeText(p.code);
-      copy.textContent="✔ Copié";
-      setTimeout(()=>copy.textContent="📋 Copier",1200);
-    };
+      btn.onclick = () => {
+        const show = pre.style.display === "none";
+        pre.style.display = show ? "block" : "none";
+        copy.style.display = show ? "inline-block" : "none";
+        btn.textContent = show ? "Masquer le code" : "Afficher le code";
+      };
 
-    const buttonRow=document.createElement('div');
-    buttonRow.style.display='flex';
-    buttonRow.style.gap='10px';
-    buttonRow.append(btn, copy);
+      copy.onclick = () => {
+        navigator.clipboard.writeText(p.code);
+        copy.textContent = "✔ Copié";
+        setTimeout(() => copy.textContent = "📋 Copier", 1200);
+      };
 
-    box.append(title, link, buttonRow, pre);
+      const buttonRow = document.createElement('div');
+      buttonRow.style.display = 'flex';
+      buttonRow.style.gap = '10px';
+      buttonRow.append(btn, copy);
+
+      box.append(buttonRow, pre);
+    }
+
     fragment.appendChild(box);
   });
 
@@ -152,14 +161,18 @@ function renderProjects(filiere){
 renderProjects("melec");
 renderProjects("ciel");
 
-document.getElementById("searchBox").addEventListener("input", e=>{
-  const term=e.target.value.toLowerCase();
-  document.querySelectorAll(".project").forEach(p=>{
-    const t=p.querySelector("h3").textContent.toLowerCase();
-    p.style.display=t.includes(term)?"block":"none";
+document.getElementById("searchBox").addEventListener("input", e => {
+  const term = e.target.value.toLowerCase();
+  document.querySelectorAll(".project").forEach(p => {
+    const t = p.querySelector("h3").textContent.toLowerCase();
+    p.style.display = t.includes(term) ? "block" : "none";
   });
 });
 
-const scrollBtn=document.getElementById("scrollTopBtn");
-window.onscroll=()=>{scrollBtn.style.display=(document.body.scrollTop>100 || document.documentElement.scrollTop>100)?"block":"none";};
-scrollBtn.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"});});
+const scrollBtn = document.getElementById("scrollTopBtn");
+window.onscroll = () => {
+  scrollBtn.style.display = (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) ? "block" : "none";
+};
+scrollBtn.addEventListener("click", () => {
+  window.scrollTo({top: 0, behavior: "smooth"});
+});
