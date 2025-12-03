@@ -105,6 +105,7 @@ void loop() {
   ]
 };
 
+// Fonction pour colorer le code
 function highlightCode(code){
   const comments = /(\/\/.*)/g;
   const keywords = /\b(void|int|float|const|long|pinMode|digitalWrite|delay|Serial|tone|noTone|INPUT|OUTPUT|HIGH|LOW)\b/g;
@@ -117,6 +118,7 @@ function highlightCode(code){
     .replace(numbers,'<span class="number">$&</span>');
 }
 
+// Fonction pour afficher les projets
 function renderProjects(filiere){
   const container = document.getElementById(filiere+"-list");
   container.innerHTML = "";
@@ -187,6 +189,7 @@ document.getElementById("searchBox").addEventListener("input", e => {
   });
 });
 
+// Bouton remonter en haut
 const scrollBtn = document.getElementById("scrollTopBtn");
 window.onscroll = () => {
   scrollBtn.style.display = (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) ? "block" : "none";
