@@ -78,7 +78,7 @@
       border-radius: 8px;
       overflow: auto;
       white-space: pre-wrap;
-      font-family: "Fira Code", "Courier New", monospace;
+      font-family: "Fira Code", monospace;
       font-size: 14px;
       line-height: 1.5;
       box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
@@ -88,6 +88,20 @@
     pre .function { color: #dcdcaa; }
     pre .comment { color: #6a9955; font-style: italic; }
     pre .number { color: #b5cea8; }
+
+    .multicolor {
+      background: linear-gradient(270deg, #ff3cac, #784ba0, #2b86c5, #20bf55, #f9c846, #ff3cac);
+      background-size: 1200% 1200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow 8s ease infinite;
+    }
+
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
     button{
       margin-top:6px;
@@ -105,28 +119,6 @@
       transform: translateY(-1px);
     }
 
-    footer{
-      padding:20px;
-      text-align:center;
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    @keyframes rainbow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .multicolor {
-      background: linear-gradient(270deg, #ff3cac, #784ba0, #2b86c5, #20bf55, #f9c846, #ff3cac);
-      background-size: 1200% 1200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: rainbow 8s ease infinite;
-    }
-
-    /* Bouton remonter en haut */
     #scrollTopBtn {
       display: none;
       position: fixed;
@@ -148,52 +140,42 @@
       background: #095ad1;
       transform: translateY(-2px);
     }
+
+    #searchBox{
+      width:100%;
+      padding:10px;
+      margin-top:10px;
+      border-radius:8px;
+      border:1px solid #333;
+      background:#1e1e1e;
+      color:white;
+      font-size:16px;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <div class="container">
-      <h1 class="multicolor">Ty-E</h1>
-      <div class="subtitle multicolor">Espace pour organiser les cours</div>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="card" id="melec-projects">
-      <h2 class="multicolor">Projets — Filière Melec</h2>
-      <div id="melec-list"></div>
-    </section>
-
-    <section class="card" id="ciel-projects">
-      <h2 class="multicolor">Projets — Filière Ciel</h2>
-      <div id="ciel-list"></div>
-    </section>
-  </main>
-
-  <footer>Site local — pas de serveur. Enregistre ton HTML et ouvre-le dans ton navigateur.</footer>
-
-  <button id="scrollTopBtn" title="Remonter en haut">⬆️</button>
-
-  <script>
-    const projetsParFiliere = {
-      melec: [
-        {
-          titre: "Circuit simple Melec",
-          lien: "https://www.tinkercad.com",
-          code: `// Code exemple Melec
-void setup() {
-}
-
-void loop() {
-}`
-        }
-      ],
-
-      ciel: [
-        {
-          titre: "Feux tricolore",
-          lien: "https://www.tinkercad.com/things/3xvFANLNDCH-amazing-hango-albar",
-          code: `// Feux Tricolore Arduino
+<header>
+  <div class="container">
+    <h1 class="multicolor">Ty-E</h1>
+    <div class="subtitle multicolor">Espace pour organiser les cours</div>
+    <input id="searchBox" placeholder="🔎 Rechercher un projet...">
+  </div>
+</header>
+<main class="container">
+  <section class="card"><h2 class="multicolor">Projets — Melec</h2><div id="melec-list"></div></section>
+  <section class="card"><h2 class="multicolor">Projets — Ciel</h2><div id="ciel-list"></div></section>
+</main>
+<footer>Site local — pas de serveur. Enregistre ton HTML et ouvre-le dans ton navigateur.</footer>
+<button id="scrollTopBtn" title="Remonter en haut">⬆️</button>
+<script>
+const projetsParFiliere={
+  melec:[
+    {titre:"Circuit simple Melec", lien:"https://www.tinkercad.com", code:`// Code exemple Melec
+void setup() {}
+void loop() {}`}
+  ],
+  ciel:[
+    {titre:"Feux tricolore", lien:"https://www.tinkercad.com/things/3xvFANLNDCH-amazing-hango-albar", code:`// Feux Tricolore Arduino
 int ledRouge = 10;
 int ledOrange = 9;
 int ledVerte = 8;
@@ -208,21 +190,14 @@ void loop() {
   digitalWrite(ledRouge, HIGH);
   delay(3000);
   digitalWrite(ledRouge, LOW);
-
   digitalWrite(ledOrange, HIGH);
   delay(1000);
   digitalWrite(ledOrange, LOW);
-
   digitalWrite(ledVerte, HIGH);
   delay(3000);
   digitalWrite(ledVerte, LOW);
-}`
-        },
-
-        {
-          titre: "Allumage LED",
-          lien: "https://www.tinkercad.com/things/1UpGT1sjzcR-allumage-led/editel?returnTo=%2Fdashboard%2Fdesigns%2Fcircuits&sharecode=ail54Vz72JJmgXlErtnDRKm5HRVtdC-XaEcI4Cs1zVU",
-          code: `const int led = 13;
+}`},
+    {titre:"Allumage LED", lien:"https://www.tinkercad.com/things/1UpGT1sjzcR-allumage-led", code:`const int led = 13;
 
 void setup() {
   pinMode(led, OUTPUT);
@@ -233,13 +208,8 @@ void loop() {
   delay(500);
   digitalWrite(led, LOW);
   delay(500);
-}`
-        },
-
-        {
-          titre: "Capteur Ultrason",
-          lien: "https://www.tinkercad.com/things/elsRRyCBrV7-neat-crift-sango/editel?returnTo=%2Fdashboard%2Fdesigns%2Fall&sharecode=KUsHieZDl-vBZVP5hk0_jTvRVwopc7noWG2aBK6O1uY",
-          code: `const int TRIGGER_PIN = 2;
+}`},
+    {titre:"Capteur Ultrason", lien:"https://www.tinkercad.com/things/elsRRyCBrV7-neat-crift-sango", code:`const int TRIGGER_PIN = 2;
 const int ECHO_PIN = 3;
 const float SOUND_SPEED = 0.343;
 const unsigned long MEASURE_TIMEOUT = 25000;
@@ -255,10 +225,8 @@ void loop() {
   digitalWrite(TRIGGER_PIN, HIGH);
   delayMicroseconds(10);
   digitalWrite(TRIGGER_PIN, LOW);
-
   long measure = pulseIn(ECHO_PIN, HIGH, MEASURE_TIMEOUT);
   float distance_mm = measure * 0.5 * SOUND_SPEED;
-
   Serial.print("Distance : ");
   Serial.print(distance_mm);
   Serial.print(" mm (");
@@ -266,15 +234,9 @@ void loop() {
   Serial.print(" cm, ");
   Serial.print(distance_mm / 1000.0);
   Serial.println(" m)");
-
   delay(200);
-}`
-        },
-
-        {
-          titre: "Bouton + Buzzer",
-          lien: "https://www.tinkercad.com/things/dkqLm6Srjgs-funky-curcan/editel?returnTo=%2Fdashboard%2Fdesigns%2Fall&sharecode=xgHqqFQSWwEwYNUIFsBB1Ye3ja1yvRGqt592rT24OsI",
-          code: `int bouton = 8;
+}`},
+    {titre:"Bouton + Buzzer", lien:"https://www.tinkercad.com/things/dkqLm6Srjgs-funky-curcan", code:`int bouton = 8;
 int buzzer = 7;
 
 void setup() {
@@ -283,81 +245,73 @@ void setup() {
 }
 
 void loop() {
-  if (digitalRead(bouton) == HIGH) {
+  if(digitalRead(bouton) == HIGH) {
     tone(buzzer, 1000);
   } else {
     noTone(buzzer);
   }
-}`
-        }
-      ]
+}`}
+  ]
+};
+
+function highlightCode(code){
+  const comments = /(\/\/.*)/g;
+  const keywords = /\b(void|int|float|const|long|pinMode|digitalWrite|delay|Serial|tone|noTone|INPUT|OUTPUT|HIGH|LOW)\b/g;
+  const functions = /\b(setup|loop|pulseIn|begin)\b/g;
+  const numbers = /\b\d+(\.\d+)?\b/g;
+  return code.replace(comments,'<span class="comment">$1</span>').replace(keywords,'<span class="keyword">$1</span>').replace(functions,'<span class="function">$1</span>').replace(numbers,'<span class="number">$&</span>');
+}
+
+function renderProjects(filiere){
+  const container=document.getElementById(filiere+"-list");
+  container.innerHTML="";
+
+  projetsParFiliere[filiere].forEach(p=>{
+    const box=document.createElement("div"); box.className="project";
+    const title=document.createElement("h3"); title.textContent=p.titre; title.classList.add("multicolor");
+    const link=document.createElement("a"); link.href=p.lien; link.target="_blank"; link.textContent="🔗 Ouvrir le montage";
+
+    const btn=document.createElement("button"); btn.textContent="Afficher le code";
+    const copy=document.createElement("button"); copy.textContent="📋 Copier"; copy.style.display='none';
+
+    const pre=document.createElement("pre"); pre.style.display="none"; pre.innerHTML=highlightCode(p.code);
+
+    btn.onclick=()=>{
+      const show=pre.style.display==="none";
+      pre.style.display=show?"block":"none";
+      copy.style.display=show?"inline-block":"none";
+      btn.textContent=show?"Masquer le code":"Afficher le code";
     };
 
-    function highlightCode(code){
-      const comments = /(\/\/.*)/g;
-      const keywords = /\b(void|int|float|const|long|pinMode|digitalWrite|delay|Serial|tone|noTone|INPUT|OUTPUT|HIGH|LOW)\b/g;
-      const functions = /\b(setup|loop|pulseIn|begin)\b/g;
-      const numbers = /\b\d+(\.\d+)?\b/g;
-
-      return code
-        .replace(comments,'<span class="comment">$1</span>')
-        .replace(keywords,'<span class="keyword">$1</span>')
-        .replace(functions,'<span class="function">$1</span>')
-        .replace(numbers,'<span class="number">$&</span>');
-    }
-
-    function renderProjects(filiere){
-      const container = document.getElementById(filiere+"-list");
-      if(!container) return;
-      container.innerHTML = "";
-      projetsParFiliere[filiere].forEach((p,index)=>{
-        const box = document.createElement("div");
-        box.className="project";
-
-        const title = document.createElement("h3");
-        title.textContent = p.titre;
-        title.classList.add("multicolor");
-
-        const link = document.createElement("a");
-        link.href = p.lien;
-        link.target="_blank";
-        link.textContent = "🔗 Ouvrir le montage Tinkercad";
-
-        const button = document.createElement("button");
-        button.textContent="Afficher le code";
-
-        const pre = document.createElement("pre");
-        pre.id=filiere+"-code-"+index;
-        pre.innerHTML = highlightCode(p.code);
-        pre.style.display="none";
-
-        button.addEventListener("click",()=>{
-          const visible = pre.style.display==="none";
-          pre.style.display = visible ? "block":"none";
-          button.textContent = visible?"Masquer le code":"Afficher le code";
-          button.setAttribute("aria-expanded", visible);
-        });
-
-        box.append(title, link, button, pre);
-        container.appendChild(box);
-      });
-    }
-
-    window.addEventListener("load", ()=>{
-      renderProjects("melec");
-      renderProjects("ciel");
-    });
-
-    const scrollBtn = document.getElementById("scrollTopBtn");
-    window.onscroll = function() {
-      scrollBtn.style.display =
-        (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100)
-        ? "block" : "none";
+    copy.onclick=()=>{
+      navigator.clipboard.writeText(p.code);
+      copy.textContent="✔ Copié";
+      setTimeout(()=>copy.textContent="📋 Copier",1200);
     };
 
-    scrollBtn.addEventListener("click", ()=>{
-      window.scrollTo({ top:0, behavior:"smooth" });
-    });
-  </script>
+    const buttonRow=document.createElement('div');
+    buttonRow.style.display='flex'; buttonRow.style.gap='10px';
+    buttonRow.append(btn, copy);
+
+    box.append(title, link, buttonRow, pre);
+    container.appendChild(box);
+  });
+}
+
+renderProjects("melec");
+renderProjects("ciel");
+
+document.getElementById("searchBox").addEventListener("input", e=>{
+  const term=e.target.value.toLowerCase();
+  document.querySelectorAll(".project").forEach(p=>{
+    const t=p.querySelector("h3").textContent.toLowerCase();
+    p.style.display=t.includes(term)?"block":"none";
+  });
+});
+
+const scrollBtn=document.getElementById("scrollTopBtn");
+window.onscroll=()=>{scrollBtn.style.display=(document.body.scrollTop>100 || document.documentElement.scrollTop>100)?"block":"none";};
+scrollBtn.addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"});});
+</script>
 </body>
 </html>
