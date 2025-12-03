@@ -1,14 +1,12 @@
 const projetsParFiliere = {
   melec: [
     {
-      titre: "SIGNAUX DIODE",
+      titre: "LECTURE SIGNAUX",
       lien: "https://www.tinkercad.com/things/4BP9wfD0XwW-copy-of-lecture-signaux",
-      // Pas de code pour Melec
     },
     {
       titre: "REDRESSEUR DIODE",
       lien: "https://www.tinkercad.com/things/9DSqqfoTbny-redresseur-diode"
-      // Pas de code pour ce projet non plus
     }
   ],
   ciel: [
@@ -107,7 +105,6 @@ void loop() {
   ]
 };
 
-// Fonction pour colorer le code
 function highlightCode(code){
   const comments = /(\/\/.*)/g;
   const keywords = /\b(void|int|float|const|long|pinMode|digitalWrite|delay|Serial|tone|noTone|INPUT|OUTPUT|HIGH|LOW)\b/g;
@@ -120,7 +117,6 @@ function highlightCode(code){
     .replace(numbers,'<span class="number">$&</span>');
 }
 
-// Fonction pour afficher les projets
 function renderProjects(filiere){
   const container = document.getElementById(filiere+"-list");
   container.innerHTML = "";
@@ -141,7 +137,6 @@ function renderProjects(filiere){
 
     box.append(title, link);
 
-    // Ajouter le code uniquement si il existe
     if(p.code){
       const btn = document.createElement("button");
       btn.textContent = "Afficher le code";
@@ -181,11 +176,9 @@ function renderProjects(filiere){
   container.appendChild(fragment);
 }
 
-// Initialisation
 renderProjects("melec");
 renderProjects("ciel");
 
-// Recherche
 document.getElementById("searchBox").addEventListener("input", e => {
   const term = e.target.value.toLowerCase();
   document.querySelectorAll(".project").forEach(p => {
@@ -194,7 +187,6 @@ document.getElementById("searchBox").addEventListener("input", e => {
   });
 });
 
-// Bouton remonter en haut
 const scrollBtn = document.getElementById("scrollTopBtn");
 window.onscroll = () => {
   scrollBtn.style.display = (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) ? "block" : "none";
@@ -203,3 +195,22 @@ scrollBtn.addEventListener("click", () => {
   window.scrollTo({top: 0, behavior: "smooth"});
 });
 
+/* 🌟 Emoji tombants */
+const emojiContainer = document.createElement('div');
+emojiContainer.className = 'emoji-bg';
+document.body.appendChild(emojiContainer);
+
+const emojis = ['📁', '🔒'];
+
+function createEmoji() {
+  const emoji = document.createElement('div');
+  emoji.className = 'emoji';
+  emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  emoji.style.left = Math.random() * 100 + 'vw';
+  emoji.style.fontSize = 16 + Math.random() * 32 + 'px';
+  emoji.style.animationDuration = 5 + Math.random() * 5 + 's';
+  emojiContainer.appendChild(emoji);
+  setTimeout(() => emoji.remove(), parseFloat(emoji.style.animationDuration) * 1000);
+}
+
+setInterval(createEmoji, 300);
