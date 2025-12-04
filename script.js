@@ -1,5 +1,5 @@
 /*******************
- *   PROJETS
+ * PROJETS
  *******************/
 const projetsParFiliere = {
   melec: [
@@ -103,7 +103,7 @@ void loop() {
 };
 
 /*******************
- *   SYNTAX HIGHLIGHT
+ * RENDER PROJECTS
  *******************/
 function highlightCode(code) {
   const comments = /(\/\/.*)/g;
@@ -118,9 +118,6 @@ function highlightCode(code) {
     .replace(numbers, '<span class="number">$&</span>');
 }
 
-/*******************
- *   RENDER LISTES
- *******************/
 function renderProjects(filiere) {
   const container = document.getElementById(filiere + "-list");
   container.innerHTML = "";
@@ -130,12 +127,10 @@ function renderProjects(filiere) {
     const box = document.createElement("div");
     box.className = "project";
 
-    // Titre
     const title = document.createElement("h3");
     title.textContent = p.titre;
     title.classList.add("multicolor");
 
-    // Lien
     const link = document.createElement("a");
     link.href = p.lien;
     link.target = "_blank";
@@ -143,7 +138,6 @@ function renderProjects(filiere) {
 
     box.append(title, link);
 
-    // Code si présent
     if (p.code) {
       const btn = document.createElement("button");
       btn.textContent = "Afficher le code";
@@ -183,12 +177,11 @@ function renderProjects(filiere) {
   container.appendChild(frag);
 }
 
-// Rendu initial
 renderProjects("melec");
 renderProjects("ciel");
 
 /*******************
- *   SEARCH
+ * SEARCH
  *******************/
 document.getElementById("searchBox").addEventListener("input", e => {
   const term = e.target.value.toLowerCase();
@@ -199,23 +192,22 @@ document.getElementById("searchBox").addEventListener("input", e => {
 });
 
 /*******************
- *   SCROLL TOP BTN
+ * SCROLL TOP
  *******************/
 const scrollBtn = document.getElementById("scrollTopBtn");
 window.addEventListener("scroll", () => {
-  scrollBtn.style.display =
-    window.scrollY > 100 ? "block" : "none";
+  scrollBtn.style.display = window.scrollY > 100 ? "block" : "none";
 });
 scrollBtn.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 /*******************
- *   PLUIE D’EMOJIS
+ * EMOJIS
  *******************/
 const emojiContainer = document.createElement("div");
 emojiContainer.className = "emoji-bg";
-document.body.appendChild(emojiContainer);
+document.querySelector("main.container").prepend(emojiContainer);
 
 const emojis = ["📁", "🔒"];
 
@@ -231,5 +223,4 @@ function createEmoji() {
   setTimeout(() => e.remove(), parseFloat(e.style.animationDuration) * 1000);
 }
 
-// Densité parfaite
 setInterval(createEmoji, 120);
